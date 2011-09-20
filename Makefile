@@ -7,6 +7,7 @@ REBAR=./rebar
 all:
 	@$(REBAR) get-deps compile
 
+docs:
 edoc:
 	@$(REBAR) doc
 
