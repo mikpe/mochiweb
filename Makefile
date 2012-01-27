@@ -1,23 +1,26 @@
-
-PREFIX:=../
-DEST:=$(PREFIX)$(PROJECT)
-
-REBAR=./rebar
+.PHONY:	all check test clean
 
 all:
-	@$(REBAR) get-deps compile
+	./rebar compile
 
 docs:
-edoc:
-	@$(REBAR) doc
+	./rebar doc
+
+check:
+	./rebar check-plt
+	./rebar dialyze
 
 test:
 	@rm -rf .eunit
 	@mkdir -p .eunit
-	@$(REBAR) skip_deps=true eunit
+	./rebar skip_deps=true eunit
+
+conf_clean:
+	@:
 
 clean:
-	@$(REBAR) clean
+	./rebar clean
+	$(RM) doc/*
 
 build_plt:
 	@$(REBAR) build-plt
@@ -25,6 +28,5 @@ build_plt:
 dialyzer:
 	@$(REBAR) dialyze
 
-app:
-	@$(REBAR) create template=mochiwebapp dest=$(DEST) appid=$(PROJECT)
 
+# eof
